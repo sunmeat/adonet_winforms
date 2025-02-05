@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient; // РїР°РєРµС‚ РЅСѓР¶РЅРѕ СЃС‚Р°РІРёС‚СЊ С‡РµСЂРµР· РЅСѓРіРµС‚!
 using System.Reflection;
 
 namespace ProductsWinForms
@@ -8,13 +8,13 @@ namespace ProductsWinForms
         public Form1()
         {
             InitializeComponent();
-            this.DoubleBuffered = true; // включение двойной буферизации для формы
-            EnableListViewDoubleBuffering(listView1); // включение двойной буферизации для ListView
+            this.DoubleBuffered = true; // ГўГЄГ«ГѕГ·ГҐГ­ГЁГҐ Г¤ГўГ®Г©Г­Г®Г© ГЎГіГґГҐГ°ГЁГ§Г Г¶ГЁГЁ Г¤Г«Гї ГґГ®Г°Г¬Г»
+            EnableListViewDoubleBuffering(listView1); // ГўГЄГ«ГѕГ·ГҐГ­ГЁГҐ Г¤ГўГ®Г©Г­Г®Г© ГЎГіГґГҐГ°ГЁГ§Г Г¶ГЁГЁ Г¤Г«Гї ListView
             LoadProducts();
             ListViewSettings();
         }
 
-        // строка подключения к базе данных
+        // Г±ГІГ°Г®ГЄГ  ГЇГ®Г¤ГЄГ«ГѕГ·ГҐГ­ГЁГї ГЄ ГЎГ Г§ГҐ Г¤Г Г­Г­Г»Гµ
         string connectionString = "Server=localhost; Database=Store; Integrated Security=True; TrustServerCertificate=True; MultipleActiveResultSets=True;";
 
         private void ListViewSettings()
@@ -31,29 +31,29 @@ namespace ProductsWinForms
                 {
                     connection.Open();
 
-                    // запрос для извлечения данных из таблицы продуктов
+                    // Г§Г ГЇГ°Г®Г± Г¤Г«Гї ГЁГ§ГўГ«ГҐГ·ГҐГ­ГЁГї Г¤Г Г­Г­Г»Гµ ГЁГ§ ГІГ ГЎГ«ГЁГ¶Г» ГЇГ°Г®Г¤ГіГЄГІГ®Гў
                     string query = "SELECT id, name, price, quantity, picture_path FROM Product";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            // очищаем ListView перед загрузкой новых данных
+                            // Г®Г·ГЁГ№Г ГҐГ¬ ListView ГЇГҐГ°ГҐГ¤ Г§Г ГЈГ°ГіГ§ГЄГ®Г© Г­Г®ГўГ»Гµ Г¤Г Г­Г­Г»Гµ
                             listView1.Items.Clear();
-                            listView1.View = View.Details; // задаем отображение данных в виде таблицы
+                            listView1.View = View.Details; // Г§Г Г¤Г ГҐГ¬ Г®ГІГ®ГЎГ°Г Г¦ГҐГ­ГЁГҐ Г¤Г Г­Г­Г»Гµ Гў ГўГЁГ¤ГҐ ГІГ ГЎГ«ГЁГ¶Г»
 
-                            // добавляем колонки
+                            // Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ ГЄГ®Г«Г®Г­ГЄГЁ
                             listView1.Columns.Clear();
                             listView1.Columns.Add("ID", 50, HorizontalAlignment.Left);
                             listView1.Columns.Add("Name", 200, HorizontalAlignment.Left);
                             listView1.Columns.Add("Price", 100, HorizontalAlignment.Right);
                             listView1.Columns.Add("Quantity", 100, HorizontalAlignment.Right);
-                            listView1.Columns.Add("Picture", 200, HorizontalAlignment.Left); // столбец для пути к картинке
+                            listView1.Columns.Add("Picture", 200, HorizontalAlignment.Left); // Г±ГІГ®Г«ГЎГҐГ¶ Г¤Г«Гї ГЇГіГІГЁ ГЄ ГЄГ Г°ГІГЁГ­ГЄГҐ
 
-                            // добавляем строки в ListView
+                            // Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ Г±ГІГ°Г®ГЄГЁ Гў ListView
                             while (reader.Read())
                             {
-                                // проверяем на null перед получением значений
+                                // ГЇГ°Г®ГўГҐГ°ГїГҐГ¬ Г­Г  null ГЇГҐГ°ГҐГ¤ ГЇГ®Г«ГіГ·ГҐГ­ГЁГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГ©
                                 var id = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                                 var name = reader.IsDBNull(1) ? "Unknown" : reader.GetString(1);
                                 var price = reader.IsDBNull(2) ? 0.0 : reader.GetDouble(2);
@@ -74,29 +74,29 @@ namespace ProductsWinForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при загрузке данных: " + ex.Message);
+                MessageBox.Show("ГЋГёГЁГЎГЄГ  ГЇГ°ГЁ Г§Г ГЈГ°ГіГ§ГЄГҐ Г¤Г Г­Г­Г»Гµ: " + ex.Message);
             }
         }
 
-        // обработчик выбора элемента из ListView
+        // Г®ГЎГ°Г ГЎГ®ГІГ·ГЁГЄ ГўГ»ГЎГ®Г°Г  ГЅГ«ГҐГ¬ГҐГ­ГІГ  ГЁГ§ ListView
         private void listView1_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            // проверяем, что выбран элемент в списке
+            // ГЇГ°Г®ГўГҐГ°ГїГҐГ¬, Г·ГІГ® ГўГ»ГЎГ°Г Г­ ГЅГ«ГҐГ¬ГҐГ­ГІ Гў Г±ГЇГЁГ±ГЄГҐ
             if (listView1.SelectedItems.Count > 0)
             {
-                // получаем данные выбранного элемента
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ Г¤Г Г­Г­Г»ГҐ ГўГ»ГЎГ°Г Г­Г­Г®ГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ 
                 var selectedItem = listView1.SelectedItems[0];
                 var productName = selectedItem.SubItems[1].Text;
                 var productPrice = selectedItem.SubItems[2].Text;
                 var productQuantity = selectedItem.SubItems[3].Text;
                 var picturePath = selectedItem.SubItems[4].Text;
 
-                // обновляем информацию в "карточке" :)
-                label1.Text = "Название: " + productName;
-                label2.Text = "Цена: " + productPrice;
-                label3.Text = "Количество: " + productQuantity;
+                // Г®ГЎГ­Г®ГўГ«ГїГҐГ¬ ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГѕ Гў "ГЄГ Г°ГІГ®Г·ГЄГҐ" :)
+                label1.Text = "ГЌГ Г§ГўГ Г­ГЁГҐ: " + productName;
+                label2.Text = "Г–ГҐГ­Г : " + productPrice;
+                label3.Text = "ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ®: " + productQuantity;
 
-                // загрузка изображения в PictureBox
+                // Г§Г ГЈГ°ГіГ§ГЄГ  ГЁГ§Г®ГЎГ°Г Г¦ГҐГ­ГЁГї Гў PictureBox
                 if (!string.IsNullOrEmpty(picturePath) && File.Exists(picturePath))
                 {
                     pictureBox1.Image = Image.FromFile(picturePath);
@@ -108,7 +108,7 @@ namespace ProductsWinForms
             }
         }
 
-        // для списка двойная буферизация включается только через рефлексию
+        // Г¤Г«Гї Г±ГЇГЁГ±ГЄГ  Г¤ГўГ®Г©Г­Г Гї ГЎГіГґГҐГ°ГЁГ§Г Г¶ГЁГї ГўГЄГ«ГѕГ·Г ГҐГІГ±Гї ГІГ®Г«ГјГЄГ® Г·ГҐГ°ГҐГ§ Г°ГҐГґГ«ГҐГЄГ±ГЁГѕ
         private void EnableListViewDoubleBuffering(ListView listView)
         {
             typeof(ListView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, listView, [true]);
@@ -118,20 +118,20 @@ namespace ProductsWinForms
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                // несколько пунктов списка выбрать нельзя, так настроено в примере, поэтому берём первый выбранный [0]
+                // Г­ГҐГ±ГЄГ®Г«ГјГЄГ® ГЇГіГ­ГЄГІГ®Гў Г±ГЇГЁГ±ГЄГ  ГўГ»ГЎГ°Г ГІГј Г­ГҐГ«ГјГ§Гї, ГІГ ГЄ Г­Г Г±ГІГ°Г®ГҐГ­Г® Гў ГЇГ°ГЁГ¬ГҐГ°ГҐ, ГЇГ®ГЅГІГ®Г¬Гі ГЎГҐГ°ВёГ¬ ГЇГҐГ°ГўГ»Г© ГўГ»ГЎГ°Г Г­Г­Г»Г© [0]
                 var selectedItem = listView1.SelectedItems[0];
 
-                // получаем данные из подэлементов
+                // ГЇГ®Г«ГіГ·Г ГҐГ¬ Г¤Г Г­Г­Г»ГҐ ГЁГ§ ГЇГ®Г¤ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў
                 var productName = selectedItem.SubItems[1].Text;
                 var productPrice = selectedItem.SubItems[2].Text;
                 var productQuantity = selectedItem.SubItems[3].Text;
 
-                // отображаем сообщение с информацией о выбранном продукте
-                MessageBox.Show($"Вы купили: {productName}\nЦена: {productPrice}\nКоличество: {productQuantity}");
+                // Г®ГІГ®ГЎГ°Г Г¦Г ГҐГ¬ Г±Г®Г®ГЎГ№ГҐГ­ГЁГҐ Г± ГЁГ­ГґГ®Г°Г¬Г Г¶ГЁГҐГ© Г® ГўГ»ГЎГ°Г Г­Г­Г®Г¬ ГЇГ°Г®Г¤ГіГЄГІГҐ
+                MessageBox.Show($"Г‚Г» ГЄГіГЇГЁГ«ГЁ: {productName}\nГ–ГҐГ­Г : {productPrice}\nГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ®: {productQuantity}");
             }
             else
             {
-                MessageBox.Show("Пожалуйста, сначала выберите продукт из списка.");
+                MessageBox.Show("ГЏГ®Г¦Г Г«ГіГ©Г±ГІГ , Г±Г­Г Г·Г Г«Г  ГўГ»ГЎГҐГ°ГЁГІГҐ ГЇГ°Г®Г¤ГіГЄГІ ГЁГ§ Г±ГЇГЁГ±ГЄГ .");
             }
         }
     }
